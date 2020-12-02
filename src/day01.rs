@@ -1,6 +1,6 @@
 pub fn run()
 {
-    let mut nums = [1742,1763,1238,1424,1736,1903,
+    let nums = [1742,1763,1238,1424,1736,1903,
                     1580,1847,1860,1933,1779,1901,
                     1984,1861,1769,1896,1428,2010,
                     1673,1491,1996,1746,1973,1696,
@@ -36,7 +36,7 @@ pub fn run()
 
     let len = nums.len();
     for i in 0..len {
-        for j in i..len {
+        for j in i+1..len {
             if nums[i] + nums[j] == 2020 {
                 println!("{}", nums[i] * nums[j]);
             }
