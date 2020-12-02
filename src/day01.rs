@@ -36,11 +36,12 @@ pub fn run()
                     1642,1557,1884,1626,489,1989,1327];
 
     let len = nums.len();
-    for i in 0..len {
+    'outer: for i in 0..len {
         for j in i+1..len {
             for k in j+1..len { // this third loop is for the second puzzle only
                 if nums[i] + nums[j] + nums[k] == 2020 {
                     println!("{}", nums[i] * nums[j] * nums[k]);
+                    break 'outer;
                 }
             }
         }
