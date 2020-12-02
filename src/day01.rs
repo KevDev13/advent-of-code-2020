@@ -37,8 +37,10 @@ pub fn run()
     let len = nums.len();
     for i in 0..len {
         for j in i+1..len {
-            if nums[i] + nums[j] == 2020 {
-                println!("{}", nums[i] * nums[j]);
+            for k in j+1..len { 
+                if nums[i] + nums[j] + nums[k] == 2020 {
+                    println!("{}", nums[i] * nums[j] * nums[k]);
+                }
             }
         }
     }
