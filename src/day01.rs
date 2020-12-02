@@ -1,5 +1,6 @@
 pub fn run()
 {
+    // probably should just read the input here but whatevs
     let nums = [1742,1763,1238,1424,1736,1903,
                     1580,1847,1860,1933,1779,1901,
                     1984,1861,1769,1896,1428,2010,
@@ -37,7 +38,7 @@ pub fn run()
     let len = nums.len();
     for i in 0..len {
         for j in i+1..len {
-            for k in j+1..len { 
+            for k in j+1..len { // this third loop is for the second puzzle only
                 if nums[i] + nums[j] + nums[k] == 2020 {
                     println!("{}", nums[i] * nums[j] * nums[k]);
                 }
