@@ -45,8 +45,6 @@ pub fn run() {
                             }
                         };
                         start_from = i + 1;
-                    }
-                    if char_to_test != ' ' {
                         passwd = to_parse[start_from..].to_string();
                         break 'begin;
                     }
