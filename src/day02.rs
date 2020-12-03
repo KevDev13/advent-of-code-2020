@@ -51,14 +51,22 @@ pub fn run() {
                         break 'begin;
                     }
                 }
-                // find the number of characters in the password
-                let mut num_of_chars = 0;
-                for (i, &item) in passwd.as_bytes().iter().enumerate() {
-                    if item as char == char_to_test {
-                        num_of_chars += 1;
-                    }
-                }
-                if num_of_chars >= minimum && num_of_chars <= maximum {
+                // puzzle 1 - find the number of characters in the password
+                //let mut num_of_chars = 0;
+                //for (i, &item) in passwd.as_bytes().iter().enumerate() {
+                //    if item as char == char_to_test {
+                //        num_of_chars += 1;
+                //    }
+                //}
+                //if num_of_chars >= minimum && num_of_chars <= maximum {
+                //    total_good += 1;
+                //}
+                // puzzle 2
+                let passwd_bytes = passwd.as_bytes();
+                let char1: char = passwd_bytes[(minimum) as usize] as char;
+                let char2: char = passwd_bytes[(maximum) as usize] as char;
+                if (char1 == char_to_test && char2 != char_to_test) ||
+                    (char2 == char_to_test && char1 != char_to_test) {
                     total_good += 1;
                 }
             }
