@@ -18,6 +18,8 @@ pub fn run() {
         for l in lines {
             if let Ok(parse) = l {
                 // if len() == 0, then we are at a blank line and need to check everything we have
+                // note, this method assumes a blank line at the end of the input file
+                // otherwise, we will not check the final entry
                 if parse.len() == 0 {
                     //println!("new id");
                     let mut all_good: bool = true;
