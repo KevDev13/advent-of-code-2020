@@ -19,6 +19,7 @@ pub fn run() {
             if let Ok(parse) = l {
                 // if len() == 0, then we are at a blank line and need to check everything we have
                 if parse.len() == 0 {
+                    //println!("new id");
                     let mut all_good: bool = true;
                     // go through and check to see if all are valid + reset every value to false
                     for c in 0..checks.len() {
