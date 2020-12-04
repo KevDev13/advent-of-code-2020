@@ -12,13 +12,18 @@ fn check_byr(s: String) -> bool {
     if s.len() < 4 {
         return false;
     }
-    let year = match (&s[0..4]).trim().parse::<i32>() {
-        Ok(year) => year,
-        Err(_e) => {
+
+    if s.len() > 4 {
+        let check_for_space = &s[4..5];
+        if check_for_space != " " {
             return false;
         }
-    };
+    }
     
+    let year = match (&s[0..4]).trim().parse::<i32>() {
+        Ok(year) => year,
+        Err(_e) => return false,
+    };
     if year >= 1920 && year <= 2002 {
         return true;
     }
@@ -30,12 +35,17 @@ fn check_iyr(s: String) -> bool {
     if s.len() < 4 {
         return false;
     }
+
+    if s.len() > 4 {
+        let check_for_space = &s[4..5];
+        if check_for_space != " " {
+            return false;
+        }
+    }
     
     let year = match (&s[0..4]).trim().parse::<i32>() {
         Ok(year) => year,
-        Err(_e) => {
-            return false;
-        }
+        Err(_e) => return false,
     };
 
     if year >= 2010 && year <= 2020 {
@@ -49,13 +59,20 @@ fn check_eyr(s: String) -> bool {
     if s.len() < 4 {
         return false;
     }
+
+    if s.len() > 4 {
+        let check_for_space = &s[4..5];
+        if check_for_space != " " {
+            return false;
+        }
+    }
     
     let year = match (&s[0..4]).trim().parse::<i32>() {
         Ok(year) => year,
         Err(_e) => return false,
     };
 
-    if year >= 20210 && year <= 2030 {
+    if year >= 2020 && year <= 2030 {
         return true;
     }
     
@@ -67,9 +84,39 @@ fn check_hgt(s: String) -> bool {
         return false;
     }
 
+    // check if the third character is a number or letter to determine possible num of digits
+    // do this by attempting to cast the third character to a number
+    let num_of_digits = match (&s[2..3]).trim().parse::<i32>() {
+        Ok(_o) => 3,
+        Err(_e) => 2,
+    };
+    //println!("{}", num_of_digits);
+    let height = match (&s[0..num_of_digits]).trim().parse::<i32>() {
+        Ok(height) => height,
+        Err(_e) => return false,
+    };
+
+    let unit = &s[num_of_digits..num_of_digits+2];
     
-    
-    true
+    match unit {
+        "cm" => {
+            if height >= 150 && height <= 193 {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+        "in" => {
+            if height >= 59 && height <= 76 {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        _ => return false,
+    }
 }
 
 fn check_hcl(s: String) -> bool {
@@ -86,6 +133,13 @@ fn check_hcl(s: String) -> bool {
         return false;
     }
     
+    // check if longer than 6 characters following the hash
+    if s.len() > 7 {
+        let check_for_space = &s[7..8];
+        if check_for_space != " " {
+            return false;
+        }
+    }
     let alpha = &s[1..7];
     let mut alpha_chars = alpha.chars();
     while let Some(test_char) = alpha_chars.next() {
@@ -96,6 +150,7 @@ fn check_hcl(s: String) -> bool {
             _ => return false,
         }
     }
+
     true
 }
 
@@ -104,6 +159,13 @@ fn check_ecl(s: String) -> bool {
         return false;
     }
 
+    if s.len() > 3 {
+        let check_for_space = &s[3..4];
+        if check_for_space != " " {
+            return false;
+        }
+    }
+    
     let color = &s[0..3];
     match color {
         "amb" => return true,
@@ -122,12 +184,17 @@ fn check_pid(s: String) -> bool {
         return false;
     }
 
+    if s.len() > 9 {
+        let check_for_space = &s[9..10];
+        if check_for_space != " " {
+            return false;
+        }
+    }
+
     let _number = match (&s[0..9]).trim().parse::<i32>() {
-        Ok(number) => number,
+        Ok(_o) => return true,
         Err(_e) => return false,
     };
-
-    true
 }
 
 pub fn run() {
@@ -173,7 +240,7 @@ pub fn run() {
                             for check in 0..checks.len() {
                                 if data == checks[check].0 {
                                     checks[check].1 = true;
-                                    let rest_of_line = &parse[col..];
+                                    let rest_of_line = &parse[col+1..];
                                     checks[check].2 = checks[check].3(rest_of_line.to_string());
                                 }
                             }
