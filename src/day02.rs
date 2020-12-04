@@ -4,7 +4,7 @@ use std::path::Path;
 
 pub fn run() {
     let mut total_good: u32 = 0;
-    if let Ok(lines) = read_lines("./src/day02.txt") {
+    if let Ok(lines) = read_lines("./input/day02.txt") {
         for l in lines {
             if let Ok(to_parse) = l {
                 // parse the files here
