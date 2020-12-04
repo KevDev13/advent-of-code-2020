@@ -11,13 +11,6 @@ where P: AsRef<Path>, {
 pub fn run() {
     let mut checks = [("byr", false), ("iyr", false), ("eyr", false), ("hgt", false),
                       ("hcl", false), ("ecl", false), ("pid", false)];
-    const BYR: u8 = 0;
-    const IYR: u8 = 1;
-    const EYR: u8 = 2;
-    const HGT: u8 = 3;
-    const HCL: u8 = 4;
-    const ECL: u8 = 5;
-    const PID: u8 = 6;
 
     let mut total_valid = 0;
     
@@ -31,7 +24,7 @@ pub fn run() {
                     for c in 0..checks.len() {
                         // if any are false, this will set all_good to false, and will stay there
                         // otherwise, if all are true, all_good will remain true
-                        all_good = all_good && checks[c].1;
+                        all_good &= checks[c].1;
                         checks[c].1 = false;
                     }
                     total_valid += match all_good {
@@ -40,10 +33,23 @@ pub fn run() {
                     }
                 }
                 else {
-                    
+                    let mut chars = parse.chars();
+                    let mut col = 0;
+                    while let Some(test_char) = chars.next() {
+                        if test_char == ':' as char {
+                            let data = &parse[col-3..col];
+                            for check in 0..checks.len() {
+                                if data == checks[check].0 {
+                                    checks[check].1 = true;
+                                }
+                            }
+                        }
+                        col += 1;
+                    }
                 }
             }
         }
+        println!("{}", total_valid);
     }
     else {
         println!("error in reading file");
