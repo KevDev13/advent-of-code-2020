@@ -9,7 +9,9 @@ where P: AsRef<Path>, {
 }
 
 pub fn run() {
-    let mut max = 0;
+    //let mut max = 0;
+    let mut seats = Vec::new();
+    // go through and get list of all seats
     if let Ok(lines) = read_lines("./input/day05.txt") {
         for line in lines {
             if let Ok(parse) = line {
@@ -52,16 +54,54 @@ pub fn run() {
                 }
 
                 seat_id = row as u32 * 8 + seat as u32;
+                //println!("{}", seat_id);
+                seats.push(seat_id);
 
                 // check if seat id is greater than the current max
-                if seat_id > max {
-                    max = seat_id;
-                }
+                //if seat_id > max {
+                //    max = seat_id;
+                //}
             }
         }
-        println!("{}", max);
+        //println!("{}", max);
     }
     else {
         println!("error reading file");
+    }
+    
+    // sort the vector
+    seats.sort();
+    //println!("{:?}", seats);
+    // now find the missing seat
+    let mut prev_seat = match seats.pop() {
+        Some(prev_seat) => prev_seat,
+        None => {
+            println!("error in prev_seat initial");
+            return;
+        }
+    };
+    
+    let mut current_seat = match seats.pop() {
+        Some(current_seat) => current_seat,
+        None => {
+            println!("error in current_seat initial");
+            return;
+        }
+    };
+
+    loop {
+        //println!("{}", current_seat);
+        if prev_seat - 1 > current_seat {
+            println!("{}", prev_seat - 1);
+            break;
+        }
+        prev_seat = current_seat;
+        current_seat = match seats.pop() {
+            Some(current_seat) => current_seat,
+            None => {
+                println!("error in current_seat assignment");
+                return;
+            }
+        };
     }
 }
