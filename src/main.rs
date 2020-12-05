@@ -1,7 +1,7 @@
 // Advent of Code 2020!
 
-mod day04;
+mod day05;
 
 fn main() {
-    day04::run();
+    day05::run();
 }
